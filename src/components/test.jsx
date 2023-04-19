@@ -116,6 +116,7 @@ const Quiz = () => {
           </ul>
           <div className="flex-right">
             <button
+              className="font-bold"
               onClick={onClickNext}
               disabled={selectedAnswerIndex === null}
             >
