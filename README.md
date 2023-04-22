@@ -1,4 +1,4 @@
-## Challenge Frontend React.js
+# Challenge Frontend React.js
 
 ## TODO
 - [x] Pertanyaan dan pilihan jawaban
