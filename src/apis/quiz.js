@@ -100,7 +100,7 @@ export const TriviaData = [
          "David Lean",
          "Stanley Kubrick"
       ]
-   },{
+   }/*,{
       category: "Entertainment: Film",
       type: "multiple",
       difficulty: "medium",
@@ -111,5 +111,5 @@ export const TriviaData = [
          "Pulp Fiction",
          "Reservoir Dogs"
       ]
-   }
+   }*/
 ]
