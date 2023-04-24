@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .answer {
-   @apply cursor-pointer py-2 px-3 rounded-xl bg-zinc-800 hover:bg-zinc-700;
+   @apply cursor-pointer py-2 px-3 rounded-xl bg-zinc-800 hover:bg-blue-400/20 hover:text-blue-500;
 }
 
 .answer-active {
