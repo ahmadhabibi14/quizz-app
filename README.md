@@ -4,9 +4,10 @@
 - [x] Pertanyaan dan pilihan jawaban
 - [ ] Fetch quiz dari [Open Trivia DB](https://opentdb.com/)
 - [x] Set Timer, jika timer habis maka soal akan di tutup
-- [ ] Login atau Autentikasi
+- [x] Login atau Autentikasi
 - [ ] Simpan hasil pengerjaan di localstorage
 - [x] Tampilkan hasil pengerjaan (jumlah benar, jumlah salah & jumlah jawab)
+- [ ] Perbaiki copywriting dan UI
 
 ### Buat Aplikasi Kuis menggunakan teknologi React dengan kriteria berikut:
 1. Memiliki fitur login
