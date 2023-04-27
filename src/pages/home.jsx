@@ -1,15 +1,12 @@
 import { useState, useRef, useEffect} from "react";
-// import axios from "axios";
-
-import { TriviaData } from "../apis/quiz";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
+// import { TriviaData } from "../apis/quiz";
 
 function Home() {
    const navigate = useNavigate();
-
-   const triviaData = TriviaData;
-   // React HOOK
+   // const triviaData = TriviaData
+   const [triviaData, setTriviaData] = useState([]);
    const [showResult, setShowResult] = useState(false);
    const [allPossibleAnswers, setAllPossibleAnswers] = useState([]);
    let [currentQuestion, setCurrentQuestion] = useState(0);
@@ -17,15 +14,47 @@ function Home() {
    const [result, setResult] = useState({ correctAnswer: 0, wrongAnswer: 0, totalAnswer: 0 })
    const [timer, setTimer] = useState("00:00");
    const Ref = useRef(null);
+   
+   
+   // const getTriviaData = async () => {
+   //    try {
+   //       const response = await fetch(url);
+   //       const data = await response.json();
+   //       console.log(data.results)
+   //       setTriviaData(data.results)
+   //    } catch (error) {
+   //       console.error(error)
+   //    }
+   // }
+   
    useEffect(() => {
       if (Cookies.get("firebase_token")) {
+         fetch("https://opentdb.com/api.php?amount=10&category=10")
+            .then((response) => {
+               return response.json()
+            })
+            .then((data) => {
+               setTriviaData(data.results)
+            })
+
          combineAllAnswers();
          if (showResult === false) { clearTimer(getDateTime()); }
       } else {
-         navigate("/login")
+         navigate("/login");
       }
-      
    }, []);
+
+   useEffect(() => {
+      console.log(triviaData)
+   }, [triviaData])
+   // const getTriviaData = async () => {
+   //    const url = "https://opentdb.com/api.php?amount=10&category=10"
+   //    const resp = await fetch(url)
+   //    const data = await resp.json();
+   //    setTriviaData(data.results);
+   //    console.log(triviaData)
+   //    console.log(data.results)
+   // }
    // LOGIC
    function combineAllAnswers() {
       let allAnswers = [];
@@ -82,9 +111,8 @@ function Home() {
    }
 
    return (
-      <div className="bg-zinc-950 min-h-screen text-slate-50 flex justify-center py-16">
-         {!showResult ?
-            (
+      <div className="w-full flex justify-center">
+         {!showResult ? (
             <div className="flex flex-col space-y-6 w-5/12">
                <h1 className="py-4 rounded-xl bg-zinc-900 text-blue-600 text-3xl font-black cursor-pointer text-center">Quiz App</h1>            
                <div className="flex flex-col space-y-3 bg-zinc-900 rounded-xl p-4">
@@ -97,10 +125,16 @@ function Home() {
                      <ul className="flex flex-col space-y-3 list-none">
                         {allPossibleAnswers.map((answer, index) => (
                            <li onClick={()=> clickAnswer(answer)}
-                              className="answer"
+                              className="cursor-pointer py-2 px-3 rounded-xl bg-zinc-800 hover:bg-blue-400/20 group hover:text-blue-500 flex flex-row space-x-3"
                               key={index}
                               >
-                              {answer}
+                              <svg viewBox="0 0 24 24"
+                                 className="w-[16px] h-auto fill-none stroke-zinc-400 group-hover:stroke-blue-500"
+                                 strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                 <circle cx="12" cy="12" r="10"></circle>
+                                 <circle cx="12" cy="12" r="3"></circle>
+                              </svg>
+                              <span>{answer}</span>
                            </li>
                         ))}
                      </ul>
@@ -108,10 +142,19 @@ function Home() {
                </div>
             </div>
          ) : (
-            <div className="flex flex-col space-y-4 w-5/12">
-               <p className="text=lg font-bold">Total Answer {result.totalAnswer}</p>
-               <p className="text=lg font-bold">Correct Answer {result.correctAnswer}</p>
-               <p className="text=lg font-bold">Wrong Answer {result.wrongAnswer}</p>
+            <div className="flex flex-col w-5/12 rounded-xl bg-zinc-900 p-8 h-fit">
+               <h2 className="items-center text-xl font-bold flex flex-row justify-between py-4 border-b border-zinc-800">
+                  <span>Total Answer</span>
+                  <span className="text-blue-500">{result.totalAnswer}</span>
+               </h2>
+               <h2 className="items-center text-xl font-bold flex flex-row justify-between py-4 border-b border-zinc-800">
+                  <span>Correct Answer</span>
+                  <span className="text-blue-500">{result.correctAnswer}</span>
+               </h2>
+               <h2 className="items-center text-xl font-bold flex flex-row justify-between py-4">
+                  <span>Wrong Answer</span>
+                  <span className="text-blue-500">{result.wrongAnswer}</span>
+               </h2>
             </div>
          )}
       </div>

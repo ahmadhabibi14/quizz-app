@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
    return (
       <Router>
-         <main className="flex justify-center min-h-screen bg-zinc-950 text-zinc-50 py-24">
+         <main className="flex justify-center min-h-screen bg-zinc-950 text-zinc-50 py-16">
             <Routes>
                <Route path="/" element={<Home />} />
                <Route path="/signup" element={<SignUp />} />
