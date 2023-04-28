@@ -29,24 +29,18 @@ function Home() {
    
    useEffect(() => {
       if (Cookies.get("firebase_token")) {
-         fetch("https://opentdb.com/api.php?amount=10&category=10")
-            .then((response) => {
-               return response.json()
-            })
-            .then((data) => {
-               setTriviaData(data.results)
-            })
-
+         const fetchData = async () => {
+            const resp = await fetch("https://opentdb.com/api.php?amount=10&category=10")
+            const data = await resp.json()
+            setTriviaData(data.results)
+         }
+         fetchData();
          combineAllAnswers();
          if (showResult === false) { clearTimer(getDateTime()); }
       } else {
          navigate("/login");
       }
-   }, []);
-
-   useEffect(() => {
-      console.log(triviaData)
-   }, [triviaData])
+   }, [triviaData]);
    // const getTriviaData = async () => {
    //    const url = "https://opentdb.com/api.php?amount=10&category=10"
    //    const resp = await fetch(url)
