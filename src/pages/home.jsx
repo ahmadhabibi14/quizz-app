@@ -1,12 +1,10 @@
 import { useState, useRef, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-// import { TriviaData } from "../apis/quiz";
 
-function Home() {
+function Home(props) {
    const navigate = useNavigate();
-   // const triviaData = TriviaData
-   const [triviaData, setTriviaData] = useState([]);
+   const triviaData = props.data;
    const [showResult, setShowResult] = useState(false);
    const [allPossibleAnswers, setAllPossibleAnswers] = useState([]);
    let [currentQuestion, setCurrentQuestion] = useState(0);
@@ -16,24 +14,14 @@ function Home() {
    const Ref = useRef(null);
    useEffect(() => {
       if (Cookies.get("firebase_token")) {
-         const fetchData = async () => {
-            const resp = await fetch("https://opentdb.com/api.php?amount=10&category=10")
-            const data = await resp.json()
-            return setTriviaData(() => data.results)
+         combineAllAnswers();
+         if (showResult === false) {
+            clearTimer(getDateTime());
          }
-         fetchData().then(() => {
-            console.log(triviaData)
-            combineAllAnswers();
-            if (showResult === false) {
-               clearTimer(getDateTime());
-            }
-         }).catch((error) => {
-            console.error(error)
-         })
       } else {
          navigate("/login");
       }
-   }, []);
+   }, [props.data]);
    // LOGIC
    function combineAllAnswers() {
       let allAnswers = [];
@@ -43,7 +31,10 @@ function Home() {
       allAnswers.sort(() => Math.random() - 0.5);
       setAllPossibleAnswers(allAnswers);
    }
-   function removeCharacters(question) { return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\""); }
+   function removeCharacters(question) {
+      if (!question) return
+      return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"");
+   }
    function clickAnswer(answer) {
       if (currentQuestion !== triviaData.length - 1) {
          answer === triviaData[currentQuestion].correct_answer
