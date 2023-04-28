@@ -14,46 +14,31 @@ function Home() {
    const [result, setResult] = useState({ correctAnswer: 0, wrongAnswer: 0, totalAnswer: 0 })
    const [timer, setTimer] = useState("00:00");
    const Ref = useRef(null);
-   
-   
-   // const getTriviaData = async () => {
-   //    try {
-   //       const response = await fetch(url);
-   //       const data = await response.json();
-   //       console.log(data.results)
-   //       setTriviaData(data.results)
-   //    } catch (error) {
-   //       console.error(error)
-   //    }
-   // }
-   
    useEffect(() => {
       if (Cookies.get("firebase_token")) {
          const fetchData = async () => {
             const resp = await fetch("https://opentdb.com/api.php?amount=10&category=10")
             const data = await resp.json()
-            setTriviaData(data.results)
+            return setTriviaData(() => data.results)
          }
-         fetchData();
-         combineAllAnswers();
-         if (showResult === false) { clearTimer(getDateTime()); }
+         fetchData().then(() => {
+            console.log(triviaData)
+            combineAllAnswers();
+            if (showResult === false) {
+               clearTimer(getDateTime());
+            }
+         }).catch((error) => {
+            console.error(error)
+         })
       } else {
          navigate("/login");
       }
-   }, [triviaData]);
-   // const getTriviaData = async () => {
-   //    const url = "https://opentdb.com/api.php?amount=10&category=10"
-   //    const resp = await fetch(url)
-   //    const data = await resp.json();
-   //    setTriviaData(data.results);
-   //    console.log(triviaData)
-   //    console.log(data.results)
-   // }
+   }, []);
    // LOGIC
    function combineAllAnswers() {
       let allAnswers = [];
-      let correctAnswer = triviaData[currentQuestion].correct_answer
-      triviaData[currentQuestion].incorrect_answers.map((answer) => { allAnswers.push(answer) });
+      let correctAnswer = triviaData[currentQuestion]?.correct_answer
+      triviaData[currentQuestion]?.incorrect_answers.map((answer) => { allAnswers.push(answer) });
       allAnswers.push(correctAnswer);
       allAnswers.sort(() => Math.random() - 0.5);
       setAllPossibleAnswers(allAnswers);
@@ -153,5 +138,6 @@ function Home() {
          )}
       </div>
    )
+   // return ( <p>tes</p>)
 }
 export default Home;
