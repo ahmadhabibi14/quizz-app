@@ -11,7 +11,6 @@ function App() {
       const data = await resp.json()
       return setTriviaData(() => data.results)
    }
-
    useEffect(() => {
       fetchData();
    }, []);
