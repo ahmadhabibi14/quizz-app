@@ -2,9 +2,9 @@
 
 ## TODO
 - [x] Pertanyaan dan pilihan jawaban
-- [ ] Fetch quiz dari [Open Trivia DB](https://opentdb.com/)
+- [x] Fetch quiz dari [Open Trivia DB](https://opentdb.com/)
 - [x] Set Timer, jika timer habis maka soal akan di tutup
-- [x] Login atau Autentikasi
+- [x] Login atau Autentikasi, pakai `Firebase`
 - [ ] Simpan hasil pengerjaan di localstorage
 - [x] Tampilkan hasil pengerjaan (jumlah benar, jumlah salah & jumlah jawab)
 - [ ] Perbaiki copywriting dan UI
