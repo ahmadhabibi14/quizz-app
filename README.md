@@ -8,6 +8,7 @@
 - [ ] Simpan hasil pengerjaan di localstorage
 - [x] Tampilkan hasil pengerjaan (jumlah benar, jumlah salah & jumlah jawab)
 - [ ] Perbaiki copywriting dan UI
+- [ ] Tampilan responsif
 
 ### Buat Aplikasi Kuis menggunakan teknologi React dengan kriteria berikut:
 1. Memiliki fitur login
